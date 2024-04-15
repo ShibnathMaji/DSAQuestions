@@ -1,0 +1,92 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader br =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine().trim());
+
+        while (t-- > 0) {
+            String inputLine[] = br.readLine().trim().split(" ");
+            int n = Integer.parseInt(inputLine[0]);
+
+            int start[] = new int[n];
+            int end[] = new int[n];
+
+            inputLine = br.readLine().trim().split(" ");
+            for (int i = 0; i < n; i++)
+                start[i] = Integer.parseInt(inputLine[i]);
+
+            inputLine = br.readLine().trim().split(" ");
+            for (int i = 0; i < n; i++) 
+                end[i] = Integer.parseInt(inputLine[i]);
+                
+            int ans = new Solution().maxMeetings(start, end, n);
+            System.out.println(ans);
+        }
+    }
+}
+
+// } Driver Code Ends
+
+/*
+Intution: 
+a. We need to maximize the number of meetings in one room.
+b. For that, we need to prioritize the meetings whose end times are smaller.
+    -> End Time as in the value in end[], not the meeting duration
+    -> Smaller end values means, the room is free more often for next meeting 
+    i.e., we can conduct more meetings.
+    -> Sort the meetings in ascending order of end time.
+    -> DON'T focus on meeting duration. Focus on End time.
+c. Once sorted, we need to iterate through the sorted times, 
+   and check if start[i] > end[i-1]:
+    -> If yes, increase counter.
+*/
+class Solution 
+{
+    //Function to find the maximum number of meetings that can
+    //be performed in a meeting room.
+    public static int maxMeetings(int start[], int end[], int n)
+    {
+        List<List<Integer>> listOfMeetings = new ArrayList<>();
+        
+        for(int i = 0 ; i < n ; i++)
+            listOfMeetings.add(List.of(start[i], end[i]));
+        
+        Collections.sort(listOfMeetings, new customComparator());
+        int prevMeetingEnd = listOfMeetings.get(0).get(0);
+        
+        int counter = 1; //Since the first meeting will happen
+        for(int i = 1; i<n; i++)
+        {
+            int currMeetStart = listOfMeetings.get(i).get(0);
+            if(currMeetStart > prevMeetingEnd)
+            {
+                prevMeetingEnd = listOfMeetings.get(i).get(1);
+                counter++;
+            }     
+        }
+        return counter;
+    }
+}
+class customComparator implements Comparator<List<Integer>>
+{
+    @Override
+    public int compare(List L1, List L2)
+    {
+        /*
+		Here, L1.get() fetches us Object data type. 
+		We can't perform comparisons or addition/subtraction on the Objects. 
+		Hence we need to typecast "Object" to "Integer".
+		*/
+        if((Integer)L1.get(1) > (Integer)L2.get(1))
+            return 1;
+        else if((Integer)L1.get(1) == (Integer)L2.get(1))
+            return 0;
+        else
+            return -1;
+    }
+}
