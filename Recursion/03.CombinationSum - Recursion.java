@@ -11,23 +11,32 @@ a. When we are Picking an element, we might need to pick it up more than once to
 b. We won't be picking up any element here
     -> We just incremement the index.
     -> This increment helps iterate through the array.
-We have two base cases here, which triggers the return statement i.e., breaks the recursion: 
-    -> If the index is out of bounds i.e., the array is fully traversed
-    -> If the target reaches 0 after traversing the entire array
-        In this case, we will add the combination to our answer.
+c. Two base cases this time: 
+	-> Base Case 1: 
+		If the target sum is reached, we add the deepcopy of currCombination in the allCombinations.
+		This case might get triggered even if the the array is NOT completely traversed.
+	-> Base Case 2:
+		If the target is less than 0 : 
+			It means the numbers in the currCombination add up to a value greater than 0. 
+			So, we end the loop, backtrack and remove numbers from the currCombination.
+		If idx is out of bounds:
+			It means we have traversed the array but the elements in currCombination don't sum up to the target.
+			So we return.
 */
 class Solution 
 {
     static void combSumRecursion(int idx, int target, int candidates[],
         List<Integer> currCombination, List<List<Integer>> allCombinations)
     {
-        if(idx==candidates.length)
+        // Base case 1
+        if(target==0)
         {
-            if(target==0)
-                allCombinations.add(new ArrayList<>(currCombination));    
-            
+            allCombinations.add(new ArrayList<>(currCombination));    
             return;
         }
+        // Base Case 2
+        if(target < 0 || idx>=candidates.length)
+            return;
         
         //Pick up Element
         if(candidates[idx]<=target)
