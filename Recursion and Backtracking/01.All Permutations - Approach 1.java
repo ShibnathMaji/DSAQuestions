@@ -6,6 +6,7 @@ b. Once picked, we forward the marked array and the List of picked elements  to 
 c. In the next recursion call, we iterate over the entire array and only pick the non-marked elements.
 d. Base Case is triggered when size of List becomes equal to the array size.
 	-> Once triggered, we add the permutation into a List of List.
+	-> Upon returning, we change unmark the number in the array, by replacing it with the original value.
 e. It is mentioned that elements inside the array will be in the range of -10 to 10. 
    We can mark the elemnts picked by replacing the picked element with any number beyond this range.
 */
