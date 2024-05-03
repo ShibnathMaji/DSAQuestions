@@ -1,3 +1,17 @@
+/*
+Intution: 
+a. Here we need to check three conditions before placing a number in the empty slots:
+    -> That row must not have the number we are to place
+    -> That column must not have the number we are to place
+    -> The 3x3 square grid inside which the cell belongs, must not hav the number either.
+
+b. We iterate through the given matrix and we have a choice of number from 1 to 9 to place in each of the empty cells we get.
+    -> BEFORE placing the number, we check if the above mentioned criterias. 
+    -> If they are true, only then we place the number and proceed with the recursion and return true.
+
+c. The Base case here is done via the iteration above. The iteration of the entire matrix only happens if "true" is returned at every stage.
+    -> If at point the recursion returns false, we backtrack and empty the cell.
+*/
 class Solution 
 {
     static boolean canBePlaced(char[][] board, int i, int j, char ch)
