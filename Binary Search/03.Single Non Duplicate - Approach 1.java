@@ -15,6 +15,9 @@ class Solution
     public int singleNonDuplicate(int[] nums) 
     {
         //Check if the non-duplicate element is at the begining or at the end
+        if(nums.length==1)
+            return nums[0];
+            
         if(nums[0]!=nums[1])
             return nums[0];
         if(nums[nums.length-1]!=nums[nums.length-1])
@@ -38,7 +41,7 @@ class Solution
             int midRight = nums[mid + 1];
             System.out.println("midLeft: "+ midLeft + " midRight: " + midRight);
 
-            if(mid!=midLeft && mid!=midRight && midLeft!=midRight)
+            if(nums[mid]!=midLeft && nums[mid]!=midRight && midLeft!=midRight)
                 return nums[mid];
 
             if( (evenOrOdd == "E" && nums[mid+1]==nums[mid])
